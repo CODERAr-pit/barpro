@@ -20,13 +20,14 @@ export default function SignUpPage() {
         try {
             const response = await axios.post("/api/user/login", user);
             if (response.status === 201) {
-                const user = response.data.existingUser
+                const existingUser = response.data.existingUser
                 setServerMessage({
                     type: "success",
                     text: response.data.message || "Logged in successfully"
                 });
+                localStorage.setItem("existingUser",JSON.stringify(existingUser.username))
                 setTimeout(() => {
-                    router.push(`/user/locationPage/u/${user.username}`);
+                    router.push(`/user/locationPage`);
                 }, 500);
             }
         } catch (error: any) {
